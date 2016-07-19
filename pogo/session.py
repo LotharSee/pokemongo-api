@@ -51,8 +51,8 @@ class PogoSession(object):
         req = self.wrapInRequest(payload)
         res = self.request(req, API_URL)
         if res is None:
-            logging.critical('Servers seem to be busy. Exiting.')
-            sys.exit(-1)
+            raise Exception('Servers seem to be busy. Exiting.')
+
         return res.api_url
 
     def wrapInRequest(self, payload):
