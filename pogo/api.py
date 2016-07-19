@@ -37,11 +37,12 @@ def createRequestsSession():
     return session
 
 def createPogoSession(session, provider, access_token, loc):
-    loc = location.getLocation(loc)
-    if loc:
-        logging.info('Location: {}'.format(loc.address))
-        logging.info('Coordinates: {} {} {}'.format(loc.latitude, loc.longitude,
-            loc.altitude))
+    if not isinstance(loc, location.Location):
+        loc = location.getLocation(loc)
+        if loc:
+            logging.info('Location: {}'.format(loc.address))
+            logging.info('Coordinates: {} {} {}'.format(loc.latitude, loc.longitude,
+                loc.altitude))
 
     if access_token and loc:
         return PogoSession(session, provider, access_token, loc)
@@ -96,5 +97,3 @@ def createPTCSession(username, pw, startLocation):
     access_token = re.sub('.*access_token=', '', access_token)
 
     return createPogoSession(session, 'ptc', access_token, startLocation)
-
-        
