@@ -50,7 +50,7 @@ class PogoSession(object):
         payload.append(msg)
         req = self.wrapInRequest(payload)
         res = self.request(req, API_URL)
-        if res is None:
+        if res is None or not res.api_url:
             raise Exception('Servers seem to be busy. Exiting.')
 
         return res.api_url
